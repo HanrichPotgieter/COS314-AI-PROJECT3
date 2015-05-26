@@ -21,8 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-
+import java.text.StringCharacterIterator;
 public class TrainingData implements Serializable{
 	ArrayList<DataSet> list = new ArrayList<DataSet>();
 	public TrainingData()
@@ -51,8 +50,20 @@ public class TrainingData implements Serializable{
 			List<String> lines = Files.readAllLines(Paths.get("trainingData/" + fileName));
 			System.out.println("File contents");
 			System.out.println("==============================================");
-			for(String line : lines)
-			{
+			for(String line : lines){
+				StringCharacterIterator it = new StringCharacterIterator(line);
+				while(true){
+					Character c = it.next();
+					//System.out.println(c);
+					c = Character.toLowerCase(c);
+					if(c >= 'a' && c <= 'z'){
+						Integer i = tmp.inputCharacters.get(c);
+						tmp.inputCharacters.put(c,i+1);
+					}
+
+					if(c == it.DONE)
+						break;
+				}
 				System.out.println(line);
 			}
 			System.out.println("==============================================");
@@ -81,6 +92,10 @@ public class TrainingData implements Serializable{
 		System.out.println("==============================================");
 
 	}
+	/**
+	 * [print dispalys the data of the current set at a index]
+	 * @param i [description]
+	 */
 	public void print(int i)
 	{
 		System.out.println("==============================================");
