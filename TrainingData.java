@@ -6,6 +6,7 @@
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Iterator;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
@@ -18,6 +19,8 @@ import java.io.BufferedInputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 public class TrainingData implements Serializable{
@@ -44,8 +47,22 @@ public class TrainingData implements Serializable{
 	public void addData(String fileName,String lang,String title)
 	{
 		DataSet tmp = new DataSet(lang,title);
-		list.add(tmp);
-		saveData();
+		try {
+			List<String> lines = Files.readAllLines(Paths.get("trainingData/" + fileName));
+			System.out.println("File contents");
+			System.out.println("==============================================");
+			for(String line : lines)
+			{
+				System.out.println(line);
+			}
+			System.out.println("==============================================");
+			list.add(tmp);
+			saveData();
+		}
+		catch(IOException ex){
+			ex.printStackTrace();
+		}
+	
 	}
 	/**
 	 * [print displays the current data]

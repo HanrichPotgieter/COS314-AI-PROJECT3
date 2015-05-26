@@ -33,6 +33,8 @@ public class main{
 				System.out.print("Please enter title: ");
 				title = in.next();
 				trainingData.addData(filename,lang,title);
+				System.out.println("Type c to continue");
+				in.next();
 			}
 			else if(option == 2)
 			{
