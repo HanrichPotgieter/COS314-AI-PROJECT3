@@ -81,6 +81,13 @@ public class TrainingData implements Serializable{
 		System.out.println("==============================================");
 
 	}
+	public void print(int i)
+	{
+		System.out.println("==============================================");
+		list.get(i).printContent();
+		System.out.println("==============================================");
+
+	}
 	/**
 	 * [saveData saved the data to a file. So that it will be optimuzed when training begins.]
 	 */

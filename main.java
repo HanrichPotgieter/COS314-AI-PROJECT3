@@ -13,7 +13,7 @@ public class main{
 		while (true) {
 			clearConsole();
 			System.out.println("==============================================");
-			System.out.println("Neural Network - Languge Recognition Software");
+			System.out.println("Neural Network - Language Recognition Software");
 			System.out.println("Author: Hanrich Potgieter");
 			System.out.println("==============================================");
 			printMenu();	
@@ -39,6 +39,9 @@ public class main{
 			else if(option == 2)
 			{
 				trainingData.print();
+				System.out.print("Specify index to see:");
+				int index = in.nextInt();
+				trainingData.print(index);
 				System.out.println("Type c to continue");
 				in.next();
 			}
