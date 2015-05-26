@@ -20,11 +20,9 @@ import java.io.IOException;
 
 
 public class TrainingData implements Serializable{
-	DataSet a = new DataSet("ENGLISH","Mary had a little lamb");
 	ArrayList<DataSet> list = new ArrayList<DataSet>();
 	public TrainingData()
 	{
-		
 		loadData();
 	}
 	public void addData(String fileName,String lang,String title)
