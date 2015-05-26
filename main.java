@@ -32,13 +32,28 @@ public class main{
 				lang = in.next();
 				System.out.print("Please enter title: ");
 				title = in.next();
-
+				trainingData.addData(filename,lang,title);
+			}
+			else if(option == 2)
+			{
+				trainingData.print();
+				System.out.println("Type c to continue");
+				in.next();
+			}
+			else if(option == 3)
+			{
+				trainingData.print();
+				System.out.print("Enter the index to delete:");
+				int index = in.nextInt();
+				trainingData.delete(index);
 			}
 		}
 	}
 	public static void printMenu()
 	{
 		System.out.println("(1) Add training data.");
+		System.out.println("(2) Display training data.");
+		System.out.println("(3) Delete training data.");
 		System.out.println("(99) Quit.");
 	}
 	public final static void clearConsole()

@@ -6,6 +6,7 @@
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.BufferedOutputStream;
@@ -25,10 +26,43 @@ public class TrainingData implements Serializable{
 	{
 		loadData();
 	}
+	/**
+	 * [delete removes the selected dataset]
+	 * @param index [index of set to remove]
+	 */
+	public void delete(int index)
+	{
+		list.remove(index);
+		saveData();
+	}
+	/**
+	 * [addData add the data to the list for processing]
+	 * @param fileName [Name of the file containing the text]
+	 * @param lang     [AFR/ENG the language of the text]
+	 * @param title    [A tilte of the text]
+	 */
 	public void addData(String fileName,String lang,String title)
 	{
 		DataSet tmp = new DataSet(lang,title);
+		list.add(tmp);
 		saveData();
+	}
+	/**
+	 * [print displays the current data]
+	 */
+	public void print()
+	{
+		Integer index = 0;
+		System.out.println("==============================================");
+		for(DataSet set : list)
+		{
+			System.out.println("Index: " + index);
+			System.out.println("Title: " + set.title);
+			System.out.println("Language: " + set.lang);
+			index++;
+		}
+		System.out.println("==============================================");
+
 	}
 	/**
 	 * [saveData saved the data to a file. So that it will be optimuzed when training begins.]
