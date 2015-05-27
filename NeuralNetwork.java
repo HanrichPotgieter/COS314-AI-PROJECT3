@@ -6,6 +6,8 @@
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
+import java.lang.Math.*;
 
 public class NeuralNetwork{
 	Integer input = 26;
@@ -24,13 +26,21 @@ public class NeuralNetwork{
 	//Output layer
 	ArrayList<Node> ok = new ArrayList<Node>();
 
+	Random random = new Random();
+
 	public NeuralNetwork()
 	{
+		/**
+		 * Setup of neural network and linking all edges.
+		 */
 		//Create input nodes
 		for(int i = 0;i < input;i++){
 			zi.add(new Node());
 		}
-
+		//Creat Bias node and add it.
+		Node bias = new Node();
+		bias.value = -1.0;
+		zi.add(bias);
 		//Create hidden nodes
  		for(int i = 0;i < hidden;i++){
 			yj.add(new Node());
@@ -48,6 +58,10 @@ public class NeuralNetwork{
 				y.inputEdges.add(tmp);
 			}
 		}
+		//Creat Bias node and add it.
+		bias = new Node();
+		bias.value = -1.0;
+		yj.add(bias);
 		//Create output nodes
  		for(int i = 0;i < output;i++){
 			ok.add(new Node());
@@ -65,17 +79,66 @@ public class NeuralNetwork{
 				o.inputEdges.add(tmp);
 			}
 		}
+		/**
+		* Initializing the weights of all the edges.
+		*/
+		for(Node y:yj){
+			Integer fanin = y.inputEdges.size();
+			for(Edge e:y.inputEdges){
+				e.weight = random(fanin);
+			}
+		}
+		for(Node o:ok){
+			Integer fanin = o.inputEdges.size();
+			for(Edge e:o.inputEdges){
+				e.weight = random(fanin);
+			}
+		}
+		printNetwork();
 		
 	}
+	public Double random(Integer fanin){
+		Double start = -((1)/(Math.sqrt(fanin)));
+	//	System.out.println(start);
+		Double end = ((1)/(Math.sqrt(fanin)));
+	//	System.out.println(end);
+		Double range = (end - start);
+	//	System.out.println(range);
+		Double fraction = range * random.nextDouble();
+		Double randomNumber = fraction + start;
+	//	System.out.println(fraction);
+	//	System.out.println(randomNumber);
+		return randomNumber;
+	}
 	public void printNetwork(){
+		System.out.println("Input nodes");
+		System.out.println("==============================================");
 		for(Node n: zi){
-			System.out.println(n.value);
+			System.out.println("Value: " + n.value);
+			System.out.println("inputEdges: " + n.inputEdges.size());
+			System.out.println("outputEdges: " + n.outputEdges.size());
 		}
+		System.out.println("==============================================");
+		System.out.println("Hidden nodes");
 		for(Node n:yj){
-			System.out.println(n.value);
+			System.out.println("Value: " + n.value);
+			System.out.println("inputEdges: " + n.inputEdges.size());
+			System.out.println("outputEdges: " + n.outputEdges.size());
 		}
+		System.out.println("==============================================");
+		System.out.println("Output nodes");
 		for(Node n:ok){
-			System.out.println(n.value);
+			System.out.println("Value: " + n.value);
+			System.out.println("inputEdges: " + n.inputEdges.size());
+			System.out.println("outputEdges: " + n.outputEdges.size());
 		}
+		System.out.println("==============================================");
+		System.out.println("Vji Edges");
+		System.out.println(vji.size());
+		System.out.println("==============================================");
+		System.out.println("Wkj Edges");
+		System.out.println(wkj.size());
+		System.out.println("==============================================");
+
 	}
 }
