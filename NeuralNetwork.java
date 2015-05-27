@@ -30,6 +30,7 @@ public class NeuralNetwork{
 		for(int i = 0;i < input;i++){
 			zi.add(new Node());
 		}
+
 		//Create hidden nodes
  		for(int i = 0;i < hidden;i++){
 			yj.add(new Node());
@@ -65,5 +66,16 @@ public class NeuralNetwork{
 			}
 		}
 		
+	}
+	public void printNetwork(){
+		for(Node n: zi){
+			System.out.println(n.value);
+		}
+		for(Node n:yj){
+			System.out.println(n.value);
+		}
+		for(Node n:ok){
+			System.out.println(n.value);
+		}
 	}
 }
