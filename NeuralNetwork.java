@@ -10,8 +10,8 @@ import java.util.Random;
 import java.lang.Math.*;
 
 public class NeuralNetwork{
-	Integer input = 26;
-	Integer hidden = 26;
+	Integer input = 4;
+	Integer hidden = 4;
 	Integer output = 2;
 	Double learningRate = 0.0;
 	Double momentum = 0.0;
@@ -94,8 +94,45 @@ public class NeuralNetwork{
 				e.weight = random(fanin);
 			}
 		}
+		startValues();
+		feedForwardPhase();
 		printNetwork();
 		
+	}
+	public void feedForwardPhase()
+	{
+		//Hidden layer
+		//Compute the netyi
+		for(Node y : yj){
+			Double netyj = 0.0;
+			for(Edge e : y.inputEdges){
+				netyj += e.weight * e.startNode.value;
+				System.out.println(netyj);
+			}
+			y.value = sigmoid(netyj);
+		}
+		//Output layer
+		//Compute the netyi
+		for(Node o : ok){
+			Double netok = 0.0;
+			for(Edge e : o.inputEdges){
+				netok += e.weight * e.startNode.value;
+				System.out.println(netok);
+			}
+			o.value = sigmoid(netok);
+		}
+		
+	}
+
+	public void startValues()
+	{
+		for(Node n:zi){
+			n.value = 1.0;
+		}
+	}
+	public Double sigmoid(Double net)
+	{
+		return (1/(1+Math.pow((Math.E),-net)));
 	}
 	public Double random(Integer fanin){
 		Double start = -((1)/(Math.sqrt(fanin)));
