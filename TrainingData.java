@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 import java.text.StringCharacterIterator;
 
 public class TrainingData implements Serializable{
-	ArrayList<DataSet> list = new ArrayList<DataSet>();
+	public ArrayList<DataSet> list = new ArrayList<DataSet>();
 	public TrainingData()
 	{
 		loadData();

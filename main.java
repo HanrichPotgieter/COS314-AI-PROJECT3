@@ -69,16 +69,21 @@ public class main{
 				System.out.print("Enter the index to be used for training:");
 				int index = in.nextInt();
 				DataSet data = trainingData.getData(index);
-				if(neuralNetwork != null)
-				neuralNetwork.startValues(data);
+				if(neuralNetwork != null){
+					neuralNetwork.startValues(data);
+					neuralNetwork.start();
+				}
 				else{
 					System.out.println("Error: pleae initilize the neural network.");
 				}
-
 				System.out.println("Type c to continue");
 				in.next();
-
-				
+			}
+			else if(option == 6)
+			{
+				neuralNetwork.trainSet(trainingData.list);
+				System.out.println("Type c to continue");
+				in.next();
 
 			}
 		}
@@ -90,6 +95,7 @@ public class main{
 		System.out.println("(3) Delete training data.");
 		System.out.println("(4) Create neural network.");
 		System.out.println("(5) Train neural network.");
+		System.out.println("(6) Train on multiple data sets.");
 		System.out.println("(99) Quit.");
 	}
 	public final static void clearConsole()

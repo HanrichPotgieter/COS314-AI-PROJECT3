@@ -19,7 +19,7 @@ public class NeuralNetwork implements Serializable{
 	Double learningRate = 0.1;
 	Double momentum = 0.1;
 	Integer epoch = 1;
-	Integer maxEpoch = 10;
+	Integer maxEpoch = 100;
 	//Input Layer
 	ArrayList<Node> zi = new ArrayList<Node>();
 	ArrayList<Edge> vji = new ArrayList<Edge>();
@@ -138,7 +138,8 @@ public class NeuralNetwork implements Serializable{
 
 	public void startValues(DataSet set)
 	{
-		if(set.lang == "ENG"){
+		tk.clear();
+		if(set.lang.compareTo("ENG")==0){
 			tk.add(1);
 			tk.add(0);
 		}
@@ -155,10 +156,25 @@ public class NeuralNetwork implements Serializable{
 			z.value = (double) set.inputCharacters.get((char)i);
 			index++;
 		}
+	}
+	public void start()
+	{
 		feedForwardPhase();
 		calcError();
 		calcWeights();
 		printNetwork();
+	}
+	public void trainSet(ArrayList<DataSet> list)
+	{
+		epoch = 0;
+		while(epoch < maxEpoch)
+		{
+			for(DataSet set:list){
+				startValues(set);
+				start();
+			}
+			epoch++;
+		}
 	}
 	public void calcError()
 	{
