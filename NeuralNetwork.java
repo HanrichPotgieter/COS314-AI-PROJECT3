@@ -16,8 +16,8 @@ public class NeuralNetwork implements Serializable{
 	Integer input = 26;
 	Integer hidden = 26;
 	Integer output = 2;
-	Double learningRate = 0.0;
-	Double momentum = 0.0;
+	Double learningRate = 0.1;
+	Double momentum = 0.1;
 	Integer epoch = 1;
 	Integer maxEpoch = 10;
 	//Input Layer
@@ -29,7 +29,7 @@ public class NeuralNetwork implements Serializable{
 	//Output layer
 	ArrayList<Node> ok = new ArrayList<Node>();
 
-	ArrayList<Integer> ak = new ArrayList<Integer>();
+	ArrayList<Integer> tk = new ArrayList<Integer>();
 
 	Random random = new Random();
 
@@ -112,7 +112,7 @@ public class NeuralNetwork implements Serializable{
 			Double netyj = 0.0;
 			for(Edge e : y.inputEdges){
 				netyj += e.weight * e.startNode.value;
-				System.out.println(netyj);
+				//System.out.println(netyj);
 			}
 			y.value = sigmoid(netyj);
 		}
@@ -138,16 +138,58 @@ public class NeuralNetwork implements Serializable{
 
 	public void startValues(DataSet set)
 	{
+		if(set.lang == "ENG"){
+			tk.add(1);
+			tk.add(0);
+		}
+		else
+		{
+			tk.add(0);
+			tk.add(1);
+		}
 		Iterator<Node> it = zi.iterator();
 		Integer index = 0;
 		for(int i = ((int)'a');i <= ((int)'z');i++){
 			Node z = it.next();
-			System.out.println(index);
+			//System.out.println(index);
 			z.value = (double) set.inputCharacters.get((char)i);
 			index++;
 		}
 		feedForwardPhase();
+		calcError();
+		calcWeights();
 		printNetwork();
+	}
+	public void calcError()
+	{
+		//Error for each output node
+		Iterator<Integer> it = tk.iterator();
+		for(Node o:ok){
+			Integer tk = it.next();
+			o.error = -(tk-o.value)*(1-o.value)*(o.value);
+			//System.out.println(o.error);
+		}
+		//Error for hidden node
+		for(Node y:yj){
+			Double sum = 0.0;
+			for(Edge edge: y.outputEdges){
+				sum += edge.endNode.error*edge.weight*(1-y.value)*y.value;
+			}
+			y.error = sum;
+		}
+	}
+	public void calcWeights()
+	{
+		//Hidden to Output
+		for(Edge e:wkj){
+			e.delta = -learningRate*e.endNode.error*e.startNode.value + momentum*e.delta;
+			e.weight += e.delta;
+		}
+		//Hidden to Output
+		for(Edge e:vji){
+			e.delta = -learningRate*e.endNode.error*e.startNode.value + momentum*e.delta;
+			e.weight += e.delta;
+		}
 	}
 	public Double sigmoid(Double net)
 	{
@@ -180,6 +222,7 @@ public class NeuralNetwork implements Serializable{
 			System.out.println("Value: " + n.value);
 			System.out.println("inputEdges: " + n.inputEdges.size());
 			System.out.println("outputEdges: " + n.outputEdges.size());
+			System.out.println("Error: " + n.error);
 		}
 		System.out.println("==============================================");
 		System.out.println("Output nodes");
@@ -188,6 +231,7 @@ public class NeuralNetwork implements Serializable{
 			System.out.println("inputEdges: " + n.inputEdges.size());
 			System.out.println("outputEdges: " + n.outputEdges.size());
 			System.out.println("Ak: " + n.ak);
+			System.out.println("Error: " + n.error);
 
 		}
 		System.out.println("==============================================");

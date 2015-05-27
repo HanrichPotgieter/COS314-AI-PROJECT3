@@ -12,5 +12,5 @@ public class Node{
 	public ArrayList<Edge> inputEdges = new ArrayList<Edge>();
 	public ArrayList<Edge> outputEdges = new ArrayList<Edge>();
 	public Integer ak;
-
+	public Double error;
 }
