@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class main{
 	public static void main(String[] args){
 		TrainingData trainingData = new TrainingData();
-		NeuralNetwork neuralNetwork;
+		NeuralNetwork neuralNetwork = null;
 		Scanner in = new Scanner(System.in);
 		while (true) {
 			clearConsole();
@@ -63,6 +63,21 @@ public class main{
 				in.next();
 
 			}
+			else if(option == 5)
+			{
+				trainingData.print();
+				System.out.print("Enter the index to be used for training:");
+				int index = in.nextInt();
+				DataSet data = trainingData.getData(index);
+				if(neuralNetwork != null)
+				neuralNetwork.startValues(data);
+				else{
+					System.out.println("Error: pleae initilize the neural network.");
+				}
+
+				
+
+			}
 		}
 	}
 	public static void printMenu()
@@ -71,6 +86,7 @@ public class main{
 		System.out.println("(2) Display training data.");
 		System.out.println("(3) Delete training data.");
 		System.out.println("(4) Create neural network.");
+		System.out.println("(5) Train neural network.");
 		System.out.println("(99) Quit.");
 	}
 	public final static void clearConsole()

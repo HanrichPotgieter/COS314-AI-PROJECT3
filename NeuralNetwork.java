@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.lang.Math.*;
+import java.io.Serializable;
 
-public class NeuralNetwork{
+public class NeuralNetwork implements Serializable{
 	Double high = 0.7;
 	Double low = 0.3;
 	Integer input = 4;
@@ -98,8 +99,8 @@ public class NeuralNetwork{
 				e.weight = random(fanin);
 			}
 		}
-		startValues();
-		feedForwardPhase();
+		//startValues();
+		//feedForwardPhase();
 		printNetwork();
 		
 	}
@@ -135,11 +136,9 @@ public class NeuralNetwork{
 		
 	}
 
-	public void startValues()
+	public void startValues(DataSet set)
 	{
-		for(Node n:zi){
-			n.value = 1.0;
-		}
+
 	}
 	public Double sigmoid(Double net)
 	{
