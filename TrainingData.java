@@ -22,11 +22,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.StringCharacterIterator;
+import java.nio.charset.Charset;
 
 public class TrainingData implements Serializable{
 	public ArrayList<DataSet> list = new ArrayList<DataSet>();
-	public TrainingData()
+	String fileName = "";
+	public TrainingData(String fileName)
 	{
+		this.fileName = fileName;
 		loadData();
 	}
 	/**
@@ -52,7 +55,7 @@ public class TrainingData implements Serializable{
 	{
 		DataSet tmp = new DataSet(lang,title);
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("trainingData/" + fileName));
+			List<String> lines = Files.readAllLines(Paths.get("trainingData/" + fileName),Charset.forName("ISO-8859-1"));
 			System.out.println("File contents");
 			System.out.println("==============================================");
 			for(String line : lines){
@@ -114,7 +117,7 @@ public class TrainingData implements Serializable{
 	public void saveData()
 	{
 		try{
-			OutputStream file =  new FileOutputStream("langData.ser");
+			OutputStream file =  new FileOutputStream(fileName);
 			OutputStream buffer = new BufferedOutputStream(file);
 			ObjectOutput output = new ObjectOutputStream(buffer);
 			output.writeObject(list);
@@ -132,7 +135,7 @@ public class TrainingData implements Serializable{
 	public void loadData()
 	{
 		try{
-			InputStream file = new FileInputStream("langData.ser");
+			InputStream file = new FileInputStream(fileName);
 	      	InputStream buffer = new BufferedInputStream(file);
 	      	ObjectInput input = new ObjectInputStream (buffer);
 	      	list = (ArrayList<DataSet>)input.readObject();

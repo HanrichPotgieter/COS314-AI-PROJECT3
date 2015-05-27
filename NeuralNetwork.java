@@ -11,15 +11,16 @@ import java.lang.Math.*;
 import java.io.Serializable;
 
 public class NeuralNetwork implements Serializable{
-	Double high = 0.7;
-	Double low = 0.3;
+	public Double high = 0.7;
+	public Double low = 0.3;
 	Integer input = 26;
-	Integer hidden = 26;
+	public Integer hidden = 26;
 	Integer output = 2;
-	Double learningRate = 0.1;
-	Double momentum = 0.1;
+	public Double learningRate = 0.2;
+	public Double momentum = 0.2;
 	Integer epoch = 1;
-	Integer maxEpoch = 100;
+	public Integer maxEpoch = 2000;
+	Double trainingAccuracy = 0.0;
 	//Input Layer
 	ArrayList<Node> zi = new ArrayList<Node>();
 	ArrayList<Edge> vji = new ArrayList<Edge>();
@@ -122,7 +123,7 @@ public class NeuralNetwork implements Serializable{
 			Double netok = 0.0;
 			for(Edge e : o.inputEdges){
 				netok += e.weight * e.startNode.value;
-				System.out.println(netok);
+				//System.out.println(netok);
 			}
 			o.value = sigmoid(netok);
 			// Calculating the accuracy of each output node.
@@ -135,7 +136,26 @@ public class NeuralNetwork implements Serializable{
 		}
 		
 	}
-
+	public void runSet(DataSet set)
+	{
+		startValues(set);
+		feedForwardPhase();
+		printNetwork();
+		if(set.lang.compareTo("ENG") == 0 && ok.get(0).ak == 1 && ok.get(1).ak == 0){
+			System.out.println("Classified as english");
+			//trainingAccuracy += (1.0/((double)list.size()))*100.0;
+		}
+		else if(ok.get(0).ak == 0 && ok.get(1).ak == 1)
+		{
+			System.out.println("Classified as afrikaans");
+			//trainingAccuracy += (1.0/((double)list.size()))*100.0;
+		}
+		else
+		{
+			System.out.println("Data was not classified");
+			//trainingAccuracy += (1/list.size());
+		}
+	}
 	public void startValues(DataSet set)
 	{
 		tk.clear();
@@ -162,17 +182,34 @@ public class NeuralNetwork implements Serializable{
 		feedForwardPhase();
 		calcError();
 		calcWeights();
-		printNetwork();
+		//printNetwork();
 	}
 	public void trainSet(ArrayList<DataSet> list)
 	{
 		epoch = 0;
+		
 		while(epoch < maxEpoch)
 		{
+			trainingAccuracy = 0.0;
 			for(DataSet set:list){
 				startValues(set);
 				start();
+				if(set.lang.compareTo("ENG") == 0 && ok.get(0).ak == 1 && ok.get(1).ak == 0){
+					System.out.println("Classified as english");
+					trainingAccuracy += (1.0/((double)list.size()))*100.0;
+				}
+				else if(ok.get(0).ak == 0 && ok.get(1).ak == 1)
+				{
+					System.out.println("Classified as afrikaans");
+					trainingAccuracy += (1.0/((double)list.size()))*100.0;
+				}
+				else
+				{
+					System.out.println("Data was not classified");
+					//trainingAccuracy += (1/list.size());
+				}
 			}
+			System.out.println("Training accuracy: " +trainingAccuracy +" %");
 			epoch++;
 		}
 	}
