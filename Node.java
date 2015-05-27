@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Node{
-	public Double value;
+	public Double value = null;
 	public ArrayList<Edge> inputEdges = new ArrayList<Edge>();
 	public ArrayList<Edge> outputEdges = new ArrayList<Edge>();
 	public Integer ak;

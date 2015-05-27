@@ -13,8 +13,8 @@ import java.io.Serializable;
 public class NeuralNetwork implements Serializable{
 	Double high = 0.7;
 	Double low = 0.3;
-	Integer input = 4;
-	Integer hidden = 4;
+	Integer input = 26;
+	Integer hidden = 26;
 	Integer output = 2;
 	Double learningRate = 0.0;
 	Double momentum = 0.0;
@@ -138,7 +138,16 @@ public class NeuralNetwork implements Serializable{
 
 	public void startValues(DataSet set)
 	{
-
+		Iterator<Node> it = zi.iterator();
+		Integer index = 0;
+		for(int i = ((int)'a');i <= ((int)'z');i++){
+			Node z = it.next();
+			System.out.println(index);
+			z.value = (double) set.inputCharacters.get((char)i);
+			index++;
+		}
+		feedForwardPhase();
+		printNetwork();
 	}
 	public Double sigmoid(Double net)
 	{

@@ -75,6 +75,9 @@ public class main{
 					System.out.println("Error: pleae initilize the neural network.");
 				}
 
+				System.out.println("Type c to continue");
+				in.next();
+
 				
 
 			}
