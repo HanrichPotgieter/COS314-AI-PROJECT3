@@ -10,6 +10,7 @@ import java.util.Random;
 import java.lang.Math.*;
 
 public class NeuralNetwork{
+	Double high = 0.
 	Integer input = 4;
 	Integer hidden = 4;
 	Integer output = 2;
@@ -25,6 +26,8 @@ public class NeuralNetwork{
 	ArrayList<Edge> wkj = new ArrayList<Edge>();
 	//Output layer
 	ArrayList<Node> ok = new ArrayList<Node>();
+
+	ArrayList<Integer> ak = new ArrayList<Integer>();
 
 	Random random = new Random();
 
@@ -176,6 +179,9 @@ public class NeuralNetwork{
 		System.out.println("Wkj Edges");
 		System.out.println(wkj.size());
 		System.out.println("==============================================");
+		for(Integer i:ak){
+			System.out.println("Output: " + i);
+		}
 
 	}
 }
