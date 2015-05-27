@@ -10,7 +10,8 @@ import java.util.Random;
 import java.lang.Math.*;
 
 public class NeuralNetwork{
-	Double high = 0.
+	Double high = 0.7;
+	Double low = 0.3;
 	Integer input = 4;
 	Integer hidden = 4;
 	Integer output = 2;
@@ -123,6 +124,13 @@ public class NeuralNetwork{
 				System.out.println(netok);
 			}
 			o.value = sigmoid(netok);
+			// Calculating the accuracy of each output node.
+			if(o.value >= high)
+				o.ak = 1;
+			else if(o.value <= low)
+				o.ak = 0;
+			else
+				o.ak = -1;
 		}
 		
 	}
@@ -171,6 +179,8 @@ public class NeuralNetwork{
 			System.out.println("Value: " + n.value);
 			System.out.println("inputEdges: " + n.inputEdges.size());
 			System.out.println("outputEdges: " + n.outputEdges.size());
+			System.out.println("Ak: " + n.ak);
+
 		}
 		System.out.println("==============================================");
 		System.out.println("Vji Edges");
@@ -179,9 +189,5 @@ public class NeuralNetwork{
 		System.out.println("Wkj Edges");
 		System.out.println(wkj.size());
 		System.out.println("==============================================");
-		for(Integer i:ak){
-			System.out.println("Output: " + i);
-		}
-
 	}
 }
