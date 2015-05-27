@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class main{
 	public static void main(String[] args){
 		TrainingData trainingData = new TrainingData();
+		NeuralNetwork neuralNetwork;
 		Scanner in = new Scanner(System.in);
 		while (true) {
 			clearConsole();
@@ -52,6 +53,16 @@ public class main{
 				int index = in.nextInt();
 				trainingData.delete(index);
 			}
+			else if(option == 4)
+			{
+				System.out.println("Creating neural network");
+				//System.out.print("Please enter amount of hidden nodes:");
+				//int hidden = in.nextInt();
+				neuralNetwork = new NeuralNetwork();
+				System.out.println("Type c to continue");
+				in.next();
+
+			}
 		}
 	}
 	public static void printMenu()
@@ -59,6 +70,7 @@ public class main{
 		System.out.println("(1) Add training data.");
 		System.out.println("(2) Display training data.");
 		System.out.println("(3) Delete training data.");
+		System.out.println("(4) Create neural network.");
 		System.out.println("(99) Quit.");
 	}
 	public final static void clearConsole()
